@@ -26,7 +26,7 @@ jobs:
         # если у вас есть requirements.txt, добавьте установку
     - name: Lint with flake8
       run: |
-        flake8 cooking.py tests --count --show-source --statistics
+        flake8 cooking.py tests --max-line-length=120 --count --show-source --statistics
     - name: Test with unittest
       run: |
         python -m unittest discover tests
