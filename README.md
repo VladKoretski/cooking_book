@@ -1,5 +1,7 @@
 # Кулинарная книга
 
+[![CI](https://github.com/VladKoretski/cooking_book/actions/workflows/ci.yml/badge.svg)](https://github.com/VladKoretski/cooking_book/actions/workflows/ci.yml)
+
 Программа для чтения рецептов из текстового файла и расчёта количества ингредиентов на заданное число персон.
 
 ## Описание
