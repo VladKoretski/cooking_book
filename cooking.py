@@ -24,20 +24,25 @@ def file_into_dictionary_recipes(recipes_file):
     Читает файл с рецептами и возвращает словарь cook_book.
     """
     cook_book_dict = dict()
-    with open(recipes_file) as f:
+    current_key = None  # чтобы избежать ошибки, если файл начинается не с названия
 
+    with open(recipes_file, 'r', encoding='utf-8') as f:
         for line in f:
             data = line.strip()
             if not data:
                 continue
+
             try:
-                _ = int(data)
+                _ = int(data)  # число ингредиентов, игнорируем
             except ValueError:
-                if line_parcing(data):
+                parsed = line_parcing(data)
+
+                if parsed is True:  # это название блюда
                     cook_book_dict[data] = []
                     current_key = data
-                else:
-                    cook_book_dict[current_key].append(line_parcing(data))
+                else:  # это ингредиент (словарь)
+                    if current_key is not None:
+                        cook_book_dict[current_key].append(parsed)
     return cook_book_dict
 
 
