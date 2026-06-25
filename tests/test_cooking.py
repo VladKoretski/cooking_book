@@ -1,15 +1,14 @@
 import unittest
 import tempfile
 import os
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # чтобы импортировать cooking
+import cooking
 
-import cooking  # ваш файл cooking.py
 
 class TestCookingBook(unittest.TestCase):
     def setUp(self):
-        # Создаём временный файл с рецептами
-        self.test_file = tempfile.NamedTemporaryFile(mode='w', delete=False, encoding='utf-8')
+        self.test_file = tempfile.NamedTemporaryFile(
+            mode='w', delete=False, encoding='utf-8'
+        )
         self.test_file.write("""Омлет
 3
 Яйцо | 2 | шт
@@ -43,14 +42,12 @@ class TestCookingBook(unittest.TestCase):
         self.assertEqual(cook_book['Утка по-пекински'][0]['measure'], 'шт')
 
     def test_get_shop_list(self):
-        # Заполняем глобальную переменную cook_book в модуле cooking
         cooking.cook_book = cooking.file_into_dictionary_recipes(self.filepath)
         result = cooking.get_shop_list_by_dishes(['Омлет', 'Запеченный картофель'], 2)
-        # Так как 'Запеченный картофель' отсутствует в тестовом файле, он будет проигнорирован
         self.assertIn('Яйцо', result)
         self.assertEqual(result['Яйцо']['quantity'], 4)
-        # Проверяем, что отсутствующее блюдо не вызывает ошибки
-        cooking.get_shop_list_by_dishes(['Несуществующее'], 1)  # просто проверяем, что не падает
+        cooking.get_shop_list_by_dishes(['Несуществующее'], 1)
+
 
 if __name__ == '__main__':
     unittest.main()
